@@ -850,3 +850,135 @@ h2 {
   .featured-image { width: 240px; height: 240px; flex: 0 0 240px; }
   .featured-pet { padding: 1.5rem 0; }
 }
+/* ========================
+   Paws + Fun-Fact Dialog
+   ======================== */
+
+/* Paw buttons (left + right) */
+.paw {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 8px;
+  width: 56px;
+  height: 56px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+
+  /* ORANGE ACCENT COLOR */
+  color: var(--accent); /* makes SVG icon orange */
+
+  transition: transform 0.15s ease, filter 0.15s ease;
+  filter: drop-shadow(0 3px 6px rgba(216, 155, 51, 0.3));
+}
+
+.paw:hover,
+.paw:focus {
+  transform: translateY(-50%) scale(1.08);
+  outline: none;
+  filter: drop-shadow(0 6px 10px rgba(216, 155, 51, 0.45));
+}
+
+.paw-left { left: 10px; }
+.paw-right { right: 10px; }
+
+/* Mobile adjustment */
+@media (max-width: 600px) {
+  .paw {
+    width: 46px;
+    height: 46px;
+  }
+}
+
+/* ========================
+   Fun Fact Dialog Overlay
+   ======================== */
+
+.paw-dialog {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.25);
+  z-index: 10000;
+  padding: 20px;
+}
+
+.paw-dialog[aria-hidden="false"] {
+  display: flex;
+}
+
+/* The white dialog card */
+.paw-dialog-card {
+  background: #fff;
+  width: 92%;
+  max-width: 420px;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.15);
+  text-align: left;
+}
+
+/* Title uses your orange accent */
+.paw-dialog-card h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: var(--accent);
+  font-weight: bold;
+  font-size: 1.15rem;
+}
+
+/* Body text */
+.paw-dialog-card p {
+  margin-bottom: 16px;
+  line-height: 1.45;
+  color: var(--dark);
+}
+
+/* Buttons inside the dialog */
+.paw-dialog-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+/* Neutral Close button */
+#pawClose {
+  background: #eee;
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Main orange button: “Another Fact” */
+#pawNewFact {
+  background: var(--accent);
+  border: 2px solid var(--accent);
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #fff;
+  font-weight: bold;
+}
+
+#pawNewFact:hover {
+  background: #b47b27; /* your darker orange hover shade */
+  border-color: #b47b27;
+}
+
+/* Accessibility helper (screen-reader only) */
+.sr-only {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip: rect(1px,1px,1px,1px);
+}
