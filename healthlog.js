@@ -1,4 +1,4 @@
-// healthlog.js (with Edit + Delete for entries)
+// healthlog.js
 (function () {
   const PETS_KEY = 'cc_pets_v1';
   const LOGS_KEY = 'cc_healthlogs_v1';
