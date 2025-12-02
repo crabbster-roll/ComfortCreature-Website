@@ -1,8 +1,8 @@
 // myanimals.js
 (function () {
   const PETS_KEY = 'cc_pets_v1';
+  const LOGS_KEY = 'cc_healthlogs_v1';
 
-  // Default seed data (used only if no pets in localStorage)
   const defaultPets = [
     {
       id: 'pet-' + Date.now() + '-1',
@@ -37,7 +37,6 @@
     try {
       const raw = localStorage.getItem(PETS_KEY);
       if (!raw) {
-        // seed defaults (do not overwrite if later)
         localStorage.setItem(PETS_KEY, JSON.stringify(defaultPets));
         return defaultPets.slice();
       }
@@ -52,9 +51,34 @@
     localStorage.setItem(PETS_KEY, JSON.stringify(pets));
   }
 
+  function loadLogs() {
+    try {
+      return JSON.parse(localStorage.getItem(LOGS_KEY) || '{}');
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function saveLogs(obj) {
+    localStorage.setItem(LOGS_KEY, JSON.stringify(obj));
+  }
+
+  // Utility to avoid XSS
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
   function makePetCard(pet) {
     const wrapper = document.createElement('div');
     wrapper.className = 'pet-card';
+    wrapper.dataset.petId = pet.id;
+
     // image
     const img = document.createElement('img');
     img.alt = pet.name + ' photo';
@@ -68,24 +92,44 @@
       <b>Diet:</b> ${escapeHtml(pet.diet || '')}<br>
       <b>Notes:</b> ${escapeHtml(pet.notes || '')}`;
 
-    const btn = document.createElement('button');
-    btn.className = 'health-log-btn';
-    btn.textContent = 'Health Log';
-    btn.addEventListener('click', function () {
-      // navigate to health log page with pet id in query string
+    const btnHealth = document.createElement('button');
+    btnHealth.className = 'health-log-btn';
+    btnHealth.textContent = 'Health Log';
+    btnHealth.addEventListener('click', function () {
       window.location.href = `healthlog.html?petId=${encodeURIComponent(pet.id)}`;
     });
 
+    const btnEdit = document.createElement('button');
+    btnEdit.className = 'edit-pet-btn';
+    btnEdit.textContent = 'Edit';
+    btnEdit.addEventListener('click', function () {
+      openEditForm(wrapper, pet);
+    });
+
+    const btnDelete = document.createElement('button');
+    btnDelete.className = 'delete-pet-btn';
+    btnDelete.textContent = 'Delete';
+    btnDelete.addEventListener('click', function () {
+      if (!confirm(`Delete ${pet.name}? This will remove the pet and its health logs.`)) return;
+      deletePet(pet.id);
+    });
+
+    const controls = document.createElement('div');
+    controls.className = 'pet-controls';
+    controls.appendChild(btnHealth);
+    controls.appendChild(btnEdit);
+    controls.appendChild(btnDelete);
+
     wrapper.appendChild(img);
     wrapper.appendChild(info);
-    wrapper.appendChild(btn);
+    wrapper.appendChild(controls);
     return wrapper;
   }
 
   function renderPetList() {
     const listEl = document.querySelector('.pet-list');
     if (!listEl) return;
-    listEl.innerHTML = ''; // clear
+    listEl.innerHTML = '';
     const pets = loadPets();
     if (!pets || pets.length === 0) {
       listEl.innerHTML = '<p>No pets yet — add one on the right.</p>';
@@ -96,6 +140,108 @@
     });
   }
 
+  // Delete pet + remove logs
+  function deletePet(petId) {
+    let pets = loadPets();
+    pets = pets.filter(p => p.id !== petId);
+    savePets(pets);
+
+    // remove logs for this pet
+    const logs = loadLogs();
+    if (logs[petId]) {
+      delete logs[petId];
+      saveLogs(logs);
+    }
+    renderPetList();
+  }
+
+  // Edit form inline on the card
+  function openEditForm(cardEl, pet) {
+    // if already editing, ignore
+    if (cardEl.querySelector('.edit-pet-form')) return;
+
+    const form = document.createElement('form');
+    form.className = 'edit-pet-form';
+
+    form.innerHTML = `
+      <label>Name <input name="name" value="${escapeHtml(pet.name)}" required></label>
+      <label>Species <input name="species" value="${escapeHtml(pet.species)}" required></label>
+      <label>DOB <input type="date" name="dob" value="${escapeHtml(pet.dob)}"></label>
+      <label>Diet <input name="diet" value="${escapeHtml(pet.diet || '')}"></label>
+      <label>Notes <textarea name="notes">${escapeHtml(pet.notes || '')}</textarea></label>
+      <label>Photo (choose new to replace) <input type="file" name="photo" accept="image/*"></label>
+      <div class="edit-buttons"><button type="submit">Save</button> <button type="button" class="cancel-edit">Cancel</button></div>
+    `;
+
+    // hide static info while editing
+    const infoDiv = cardEl.querySelector('.pet-info');
+    infoDiv.style.display = 'none';
+    const controls = cardEl.querySelector('.pet-controls');
+    controls.style.display = 'none';
+
+    cardEl.appendChild(form);
+
+    form.querySelector('.cancel-edit').addEventListener('click', function () {
+      form.remove();
+      infoDiv.style.display = '';
+      controls.style.display = '';
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const fd = new FormData(form);
+      const updated = {
+        ...pet,
+        name: fd.get('name').trim(),
+        species: fd.get('species').trim(),
+        dob: fd.get('dob') || '',
+        diet: fd.get('diet').trim(),
+        notes: fd.get('notes').trim()
+      };
+
+      const photoFile = fd.get('photo');
+      // check if a file was selected (FileList/Blob in modern browsers)
+      if (photoFile && photoFile.size && photoFile.type) {
+        const reader = new FileReader();
+        reader.onload = function (ev) {
+          updated.photo = ev.target.result;
+          commitPetUpdate(updated, cardEl, form, infoDiv, controls);
+        };
+        reader.onerror = function () {
+          alert('Could not read photo file. Saving without new photo.');
+          commitPetUpdate(updated, cardEl, form, infoDiv, controls);
+        };
+        reader.readAsDataURL(photoFile);
+      } else {
+        commitPetUpdate(updated, cardEl, form, infoDiv, controls);
+      }
+    });
+  }
+
+  function commitPetUpdate(updatedPet, formEl, formNode, infoDiv, controls) {
+    // update storage
+    const pets = loadPets();
+    const idx = pets.findIndex(p => p.id === updatedPet.id);
+    if (idx >= 0) {
+      pets[idx] = updatedPet;
+      savePets(pets);
+    }
+    // cleanup and re-render list
+    renderPetList();
+  }
+
+  // helper wrapper to match signature above
+  function commitPetUpdate(updatedPet, cardEl, formEl, infoDiv, controls) {
+    const pets = loadPets();
+    const idx = pets.findIndex(p => p.id === updatedPet.id);
+    if (idx >= 0) {
+      pets[idx] = updatedPet;
+      savePets(pets);
+    }
+    renderPetList();
+  }
+
+  // handle add form (like previous version)
   function handleFormSubmit(e) {
     e.preventDefault();
     const name = document.getElementById('petname').value.trim();
@@ -117,14 +263,13 @@
       dob,
       diet,
       notes,
-      photo: '' // will set below
+      photo: ''
     };
 
-    // if user provided a photo file, convert to data URL
     if (photoFile) {
       const reader = new FileReader();
       reader.onload = function (ev) {
-        newPet.photo = ev.target.result; // base64 data URL
+        newPet.photo = ev.target.result;
         addPetToStorage(newPet);
       };
       reader.onerror = function () {
@@ -133,12 +278,10 @@
       };
       reader.readAsDataURL(photoFile);
     } else {
-      // no file chosen — use a small placeholder image or leave blank
       newPet.photo = 'logo.png';
       addPetToStorage(newPet);
     }
 
-    // reset form
     e.target.reset();
   }
 
@@ -147,17 +290,6 @@
     pets.push(pet);
     savePets(pets);
     renderPetList();
-  }
-
-  // utility to avoid XSS when writing user input
-  function escapeHtml(str) {
-    if (!str) return '';
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
   }
 
   // init
