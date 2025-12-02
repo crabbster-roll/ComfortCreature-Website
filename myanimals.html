@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Creature Comfort - My Animals</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
@@ -23,96 +23,64 @@
   </header>
 
   <!-- Main Content -->
-<main>
-  <h1 class="my-animals-title">My Animals</h1>
+  <main>
+    <h1 class="my-animals-title">My Animals</h1>
 
-  <div class="myanimals-container">
+    <div class="myanimals-container">
 
-    <!-- LEFT COLUMN: Pet Profiles -->
-    <section class="pet-profiles">
-      <h2>Pet Profiles</h2>
-      <div class="pet-list">
-
-        <div class="pet-card">
-          <img src="dogmyanimals.jpg" alt="Lincoln the dog">
-          <div class="pet-info">
-            <strong>Lincoln</strong><br>
-            <b>Species:</b> Dog<br>
-            <b>Diet:</b> Kibble every AM and PM<br>
-            <b>Notes:</b> Favors females over males, tends to have allergies in the spring.
-          </div>
-          <button class="health-log-btn">Health Log</button>
+      <!-- LEFT COLUMN: Pet Profiles -->
+      <section class="pet-profiles">
+        <h2>Pet Profiles</h2>
+        <div class="pet-list">
+          <!-- Pet cards rendered here by JavaScript -->
         </div>
+      </section>
 
-        <div class="pet-card">
-          <img src="catmyanimals.jpg" alt="Charlie the cat">
-          <div class="pet-info">
-            <strong>Charlie</strong><br>
-            <b>Species:</b> Cat<br>
-            <b>Diet:</b> Dry Food & Wet Food everyday<br>
-            <b>Notes:</b> Takes lots of naps.
-          </div>
-          <button class="health-log-btn">Health Log</button>
-        </div>
+      <!-- RIGHT COLUMN: Add Pet Form -->
+      <section class="add-pet">
+        <h2>Add Pet</h2>
+        <form id="add-pet-form">
+          <label for="petname">Pet Name</label>
+          <input type="text" id="petname" name="petname" required>
 
-        <div class="pet-card">
-          <img src="fishmyanimals.jpg" alt="Goldie the fish">
-          <div class="pet-info">
-            <strong>Goldie</strong><br>
-            <b>Species:</b> Fish<br>
-            <b>Diet:</b> Fish food once in the AM<br>
-            <b>Notes:</b> Very easy to take care of.
-          </div>
-          <button class="health-log-btn">Health Log</button>
-        </div>
+          <label for="species">Species</label>
+          <input type="text" id="species" name="species" required>
 
-      </div>
-    </section>
+          <label for="dob">Date of Birth</label>
+          <input type="date" id="dob" name="dob">
 
-    <!-- RIGHT COLUMN: Add Pet Form -->
-    <section class="add-pet">
-      <h2>Add Pet</h2>
-      <form>
-        <label for="petname">Pet Name</label>
-        <input type="text" id="petname" name="petname">
+          <label for="diet">Diet</label>
+          <input type="text" id="diet" name="diet">
 
-        <label for="species">Species</label>
-        <input type="text" id="species" name="species">
+          <label for="notes">Notes</label>
+          <textarea id="notes" name="notes"></textarea>
 
-        <label for="dob">Date of Birth</label>
-        <input type="date" id="dob" name="dob">
+          <label for="photo">Enter Photo</label>
+          <input type="file" id="photo" name="photo" accept="image/*">
 
-        <label for="diet">Diet</label>
-        <input type="text" id="diet" name="diet">
+          <button type="submit">Add New Pet</button>
+        </form>
+      </section>
 
-        <label for="notes">Notes</label>
-        <textarea id="notes" name="notes"></textarea>
-
-        <label for="photo">Enter Photo</label>
-        <input type="file" id="photo" name="photo">
-
-        <button type="submit">Add New Pet</button>
-      </form>
-    </section>
-
-  </div>
-</main>
+    </div>
+  </main>
 
   <!-- Footer -->
- <footer class="site-footer">
-  <div class="footer-left">
-    <img src="logo.png" alt="Creature Comfort Logo">
-  </div>
-  
-  <p>© 2025 CreatureComfort, Inc</p>
-  
-  <a href="mailto:info@creaturecomfort.com">Email Us :)</a>
-  <a href="#">Legal Stuff</a>
-  <a href="#">Privacy Policy</a>
-</footer>
-<!-- Put this just before </body> in myanimals.html -->
+  <footer class="site-footer">
+    <div class="footer-left">
+      <img src="logo.png" alt="Creature Comfort Logo">
+    </div>
 
+    <p>© 2025 CreatureComfort, Inc</p>
+
+    <a href="mailto:info@creaturecomfort.com">Email Us :)</a>
+    <a href="#">Legal Stuff</a>
+    <a href="#">Privacy Policy</a>
+  </footer>
+
+  <!-- existing site JS -->
+  <script src="script.js"></script>
+  <!-- new: myanimals behavior -->
+  <script src="myanimals.js"></script>
 </body>
 </html>
-
-
