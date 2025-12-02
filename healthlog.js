@@ -1,4 +1,4 @@
-// healthlog.js
+// healthlog.js (with Edit + Delete for entries)
 (function () {
   const PETS_KEY = 'cc_pets_v1';
   const LOGS_KEY = 'cc_healthlogs_v1';
@@ -26,6 +26,16 @@
 
   function saveLogs(obj) {
     localStorage.setItem(LOGS_KEY, JSON.stringify(obj));
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
   }
 
   function renderPet(pet) {
@@ -59,31 +69,91 @@
       return;
     }
     // newest first
-    petLogs.slice().reverse().forEach(entry => {
-      const el = document.createElement('div');
-      el.className = 'health-log-entry';
-      el.innerHTML = `<div class="entry-meta"><strong>${escapeHtml(entry.date)}</strong> • <em>${escapeHtml(entry.title || '')}</em></div>
-                      <div class="entry-text">${escapeHtml(entry.text)}</div>`;
-      list.appendChild(el);
+    petLogs.slice().reverse().forEach((entry, indexReversed) => {
+      // indexReversed is index in reversed array -> compute original index
+      const idx = petLogs.length - 1 - indexReversed;
+      const entryEl = document.createElement('div');
+      entryEl.className = 'health-log-entry';
+      entryEl.dataset.idx = idx;
+
+      const meta = document.createElement('div');
+      meta.className = 'entry-meta';
+      meta.innerHTML = `<strong>${escapeHtml(entry.date)}</strong>`;
+
+      const text = document.createElement('div');
+      text.className = 'entry-text';
+      text.textContent = entry.text;
+
+      const controls = document.createElement('div');
+      controls.className = 'entry-controls';
+      const btnEdit = document.createElement('button');
+      btnEdit.textContent = 'Edit';
+      btnEdit.addEventListener('click', function () {
+        openEditEntryForm(petId, idx, entryEl, entry);
+      });
+      const btnDelete = document.createElement('button');
+      btnDelete.textContent = 'Delete';
+      btnDelete.addEventListener('click', function () {
+        if (!confirm('Delete this entry?')) return;
+        deleteEntry(petId, idx);
+      });
+      controls.appendChild(btnEdit);
+      controls.appendChild(btnDelete);
+
+      entryEl.appendChild(meta);
+      entryEl.appendChild(text);
+      entryEl.appendChild(controls);
+      list.appendChild(entryEl);
     });
   }
 
-  function addLogForPet(petId, entry) {
+  function deleteEntry(petId, idx) {
     const logs = loadLogs();
-    if (!logs[petId]) logs[petId] = [];
-    logs[petId].push(entry);
+    if (!Array.isArray(logs[petId])) return;
+    logs[petId].splice(idx, 1);
     saveLogs(logs);
     renderLogsForPet(petId);
   }
 
-  function escapeHtml(str) {
-    if (!str) return '';
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
+  function openEditEntryForm(petId, idx, entryEl, entry) {
+    // if already editing, bail
+    if (entryEl.querySelector('.edit-entry-form')) return;
+
+    const form = document.createElement('form');
+    form.className = 'edit-entry-form';
+
+    // create inputs prefilled
+    form.innerHTML = `
+      <label>Date <input type="date" name="date" value="${escapeHtml(entry.date)}" required></label>
+      <label>Note <textarea name="text" required>${escapeHtml(entry.text)}</textarea></label>
+      <div class="edit-entry-buttons"><button type="submit">Save</button> <button type="button" class="cancel-edit-entry">Cancel</button></div>
+    `;
+
+    const originalText = entryEl.querySelector('.entry-text');
+    originalText.style.display = 'none';
+    entryEl.appendChild(form);
+
+    form.querySelector('.cancel-edit-entry').addEventListener('click', function () {
+      form.remove();
+      originalText.style.display = '';
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const fd = new FormData(form);
+      const newDate = fd.get('date');
+      const newText = fd.get('text').trim();
+      if (!newDate || !newText) {
+        alert('Please provide a date and note.');
+        return;
+      }
+      const logs = loadLogs();
+      if (!Array.isArray(logs[petId])) logs[petId] = [];
+      // update the entry in place
+      logs[petId][idx] = { date: newDate, text: newText };
+      saveLogs(logs);
+      renderLogsForPet(petId);
+    });
   }
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -111,9 +181,21 @@
         alert('Please add a date and a note.');
         return;
       }
-      const entry = { date, text, title: '' };
-      addLogForPet(petId, entry);
+      const logs = loadLogs();
+      if (!Array.isArray(logs[petId])) logs[petId] = [];
+      logs[petId].push({ date, text });
+      saveLogs(logs);
       form.reset();
+      renderLogsForPet(petId);
     });
   });
+
+  // loadPets helper used above
+  function loadPets() {
+    try {
+      return JSON.parse(localStorage.getItem(PETS_KEY) || '[]');
+    } catch (e) {
+      return [];
+    }
+  }
 })();
