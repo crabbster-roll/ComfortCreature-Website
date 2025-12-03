@@ -237,7 +237,9 @@ h2 {
   border-radius: 6px;
   color: var(--accent);
   font-size: 1.1rem;
+  font-weight: bold; /* MAKE INTRO TEXT BOLD */
 }
+
 
 .search-bar {
   display: flex;
