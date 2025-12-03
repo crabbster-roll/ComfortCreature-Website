@@ -187,31 +187,7 @@ h2 {
 }
 /* Footer
 ======================== */
-.site-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #fff;
-  padding: 0.5rem 1rem;
-  border-top: 2px solid #ccc;
-  margin-top: auto; /* sticky */
-}
-
-.footer-left img {
-  height: 40px;
-}
-
-.footer-right {
-  text-align: right;
-}
-
-.footer-right p,
-.footer-right a {
-  margin-left: 1rem;
-  font-size: 0.9rem;
-  color: var(--dark);
-  text-decoration: none;
-}
+.site-footer { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 0.5rem 1rem; border-top: 2px solid #ccc; margin-top: auto; /* sticky */ } .footer-left img { height: 40px; } .footer-right { text-align: right; } .footer-right p, .footer-right a { margin-left: 1rem; font-size: 0.9rem; color: var(--dark); text-decoration: none; }
 
 /* ========================
    Care Guides
