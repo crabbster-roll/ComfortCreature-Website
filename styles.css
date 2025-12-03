@@ -235,7 +235,9 @@ h2 {
   max-width: 800px;
   margin: 0 auto 2rem;
   border-radius: 6px;
-  color: var(--accent);
+  color: #8c4d00;
+}
+
   font-size: 1.1rem;
   font-weight: bold; /* MAKE INTRO TEXT BOLD */
 }
