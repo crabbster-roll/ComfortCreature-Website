@@ -189,31 +189,50 @@ h2 {
 /* ========================
    Footer
 ======================== */
+/* outer band (full-bleed) */
 .site-footer {
+  width: 100%;
+  background: transparent;    /* show page bg around the card */
+  padding: 24px 0;            /* vertical space for the band */
+  box-sizing: border-box;
+  /* remove margin-top:auto if it's causing layout oddness; keep if you need sticky footer */
+}
+
+/* inner centered card that matches other pages */
+.site-footer__inner {
+  max-width: 1100px;          /* align with your .animal-grid */
+  margin: 0 auto;
+  padding: 12px 20px;
+  background: #fff;           /* the small white card */
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #fff;
-  padding: 0.5rem 1rem;
-  border-top: 2px solid #ccc;
-  margin-top: auto; /* sticky */
+  gap: 18px;
+  flex-wrap: wrap;
+  box-sizing: border-box;
 }
 
-.footer-left img {
-  height: 40px;
-}
+/* preserve the small logo */
+.footer-left img { height: 40px; }
 
-.footer-right {
-  text-align: right;
-}
-
-.footer-right p,
-.footer-right a {
+/* right column */
+.footer-right { text-align: right; }
+.footer-right p, .footer-right a {
   margin-left: 1rem;
   font-size: 0.9rem;
   color: var(--dark);
   text-decoration: none;
 }
+
+/* small screens */
+@media (max-width:720px) {
+  .site-footer__inner { flex-direction: column; align-items: center; gap: 8px; }
+  .footer-right { text-align: center; }
+  .footer-right p, .footer-right a { margin-left: 0; display: inline-block; }
+}
+
 
 /* ========================
    Care Guides
