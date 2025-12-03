@@ -613,16 +613,13 @@ h2 {
 /* Twitter (Orange) button */
 /* Ensure Twitter button text matches Facebook text color */
 .btn-twitter {
-  background-color: var(--accent);   /* keeps orange background */
-  border: 2px solid var(--accent);
-  color: #fff;                /* same text color as Facebook button */
+  color: #000; /* BLACK text — passes AA contrast */
 }
-
 /* Hover (keeps darker orange background; text stays the same color) */
 .btn-twitter:hover {
   background-color: #b47b27;
   border-color: #b47b27;
-  color: #fff;
+  color: #000;
 }
 
 /* Responsive */
