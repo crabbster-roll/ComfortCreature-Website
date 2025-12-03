@@ -1011,7 +1011,7 @@ h2 {
 }
 .myanimals-intro {
   background: #fff;
-  color: var(--accent);        /* dark orange text */
+  color: var(--accent);
   padding: 1rem 1.25rem;
   max-width: 800px;
   margin: 0 auto 1.8rem;
@@ -1022,4 +1022,5 @@ h2 {
   font-weight: bold;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
+
 
