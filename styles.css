@@ -597,15 +597,16 @@ h2 {
 
 /* Facebook (Teal) button */
 .btn-facebook {
-  background-color: var(--teal);        /* exact teal from :root */
+  background-color: var(--teal);
   border: 2px solid var(--teal);
-  color: #fff;                   /* text = site dark/navy */
+  color: #000; /* BLACK fixes contrast */
 }
 .btn-facebook:hover {
-  background-color: #46785e;            /* darker teal tone for hover */
+  background-color: #46785e;
   border-color: #46785e;
-   color: #fff;
+  color: #000;
 }
+
 
 /* Twitter (Orange) button */
 /* Ensure Twitter button text matches Facebook text color */
