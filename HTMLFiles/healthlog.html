@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Creature Comfort - Health Log</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo"><img src="Branding/logo (2).png" alt="Creature Comfort Logo"></div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="myanimals.html">My Animals</a>
+      <a href="careguides.html">Care Guide</a>
+      <a href="survey.html">Survey</a>
+    </nav>
+  </header>
+
+  <main class="healthlog-main">
+    <h1 id="pet-title">Health Log</h1>
+
+    <section id="pet-details">
+      <!-- pet photo and details will populate here -->
+    </section>
+
+    <section id="log-section">
+      <h2>Entries</h2>
+      <div id="log-list"></div>
+
+      <h3>Add Entry</h3>
+      <form id="add-log-form">
+        <label for="log-date">Date</label>
+        <input type="date" id="log-date" name="log-date" required>
+        <label for="log-text">Notes</label>
+        <textarea id="log-text" name="log-text" required></textarea>
+        <button type="submit">Add Entry</button>
+      </form>
+    </section>
+
+    <p><a href="myanimals.html">← Back to My Animals</a></p>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 CreatureComfort, Inc</p>
+  </footer>
+
+  <script src="healthlog.js"></script>
+</body>
+</html>
