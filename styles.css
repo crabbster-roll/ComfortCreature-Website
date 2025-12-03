@@ -982,3 +982,11 @@ h2 {
   white-space: nowrap;
   clip: rect(1px,1px,1px,1px);
 }
+
+.paw-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  pointer-events: none; /* ensures image doesn't block button clicking */
+}
+
