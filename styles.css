@@ -588,28 +588,27 @@ h2 {
 
 /* Facebook (Teal) button */
 .btn-facebook {
-  background-color: var(--teal);        /* exact teal from :root */
+  background-color: var(--teal);
   border: 2px solid var(--teal);
-  color: var(--dark);                   /* text = site dark/navy */
+  color: #fff;   /* WHITE TEXT */
 }
+
 .btn-facebook:hover {
-  background-color: #46785e;            /* darker teal tone for hover */
+  background-color: #46785e;
   border-color: #46785e;
+  color: #fff;   /* stays white on hover */
 }
 
-/* Twitter (Orange) button */
-/* Ensure Twitter button text matches Facebook text color */
 .btn-twitter {
-  background-color: var(--accent);   /* keeps orange background */
+  background-color: var(--accent);
   border: 2px solid var(--accent);
-  color: var(--dark);                /* same text color as Facebook button */
+  color: #fff;   /* WHITE TEXT */
 }
 
-/* Hover (keeps darker orange background; text stays the same color) */
 .btn-twitter:hover {
-  background-color: #b47b27;
-  border-color: #b47b27;
-  color: var(--dark);
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: #fff;   /* stays white on hover */
 }
 
 /* Responsive */
