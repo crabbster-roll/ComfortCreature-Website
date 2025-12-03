@@ -415,7 +415,7 @@ h2 {
   font-size: 2rem;
   font-weight: bold;
   margin: 1.5rem 0;
-  color: var(--dark);
+  color: #000; /* BLACK */
 }
 
 .myanimals-container {
@@ -432,7 +432,7 @@ h2 {
 }
 
 .pet-profiles h2 {
-  color: var(--accent);
+  color: #000; /* BLACK (was accent) */
   margin-bottom: 1rem;
 }
 
@@ -447,95 +447,8 @@ h2 {
   border: 2px solid #d3d3d3;
   border-radius: 12px;
   padding: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
-  min-height: 200px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-}
+  display:
 
-.pet-card img {
-  width: 120px;
-  height: 120px;
-  border-radius: 12px;
-  object-fit: cover;
-}
-
-.pet-info {
-  flex: 1;
-  font-size: 1.1rem;
-  line-height: 1.5;
-}
-
-.health-log-btn {
-  background: #5a9c7a;
-  color: white;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  font-family: 'Jua', sans-serif;
-}
-
-.health-log-btn:hover {
-  background: #46785e;
-}
-
-.add-pet {
-  flex: 1.2;
-  max-width: 500px;
-  background: #fff;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-  min-height: 600px;
-  align-self: stretch;
-  margin-left: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.add-pet h2 {
-  color: var(--accent);
-  margin-bottom: 1rem;
-}
-
-.add-pet label {
-  display: block;
-  font-weight: bold;
-  margin-top: 0.8rem;
-}
-
-.add-pet input,
-.add-pet textarea {
-  width: 100%;
-  padding: 0.5rem;
-  border: 2px solid #ccc;
-  border-radius: 6px;
-  margin-top: 0.3rem;
-}
-
-.add-pet button {
-  margin-top: 1rem;
-  width: 100%;
-  padding: 0.7rem;
-  font-weight: bold;
-  background: var(--teal);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.add-pet button:hover {
-  background: #46785e;
-}
-.slides {
-  display: none;
-}
 
 .slideshow img {
   width: 100%;
