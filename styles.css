@@ -434,7 +434,15 @@ h2 {
 .pet-profiles h2 {
   color: var(--accent);
   margin-bottom: 1rem;
+
+  /* NEW white box styling */
+  background: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 2px solid #d3d3d3;
+  display: inline-block; /* keeps box tight around the text */
 }
+
 
 .pet-list {
   display: flex;
