@@ -14,16 +14,23 @@
     }
 
     .animal-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* exactly 3 per row */
-  gap: 40px;                             /* more space between cards */
-  justify-items: center;
-  align-items: start;
-  margin: 40px auto;
-  max-width: 1100px;                     /* keeps overall layout neat */
-  padding: 0 20px;
-}
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* exactly 3 per row */
+      gap: 40px;                             /* more space between cards */
+      justify-items: center;
+      align-items: start;
+      margin: 40px auto;
+      max-width: 1100px;                     /* keeps overall layout neat */
+      padding: 0 20px;
+      list-style: none; /* reset default list styles */
+      padding-left: 0;  /* ensure no left padding */
+    }
 
+    .animal-grid li {
+      list-style: none;
+      width: 100%;
+      display: block;
+    }
 
     /* Make the whole card a clearly focusable link */
     .animal-card {
@@ -151,38 +158,50 @@
       </div>
 
       <!-- Animal Cards -->
-      <div class="animal-grid" role="list">
+      <ul class="animal-grid">
         <!-- Each card is a single link. Images are decorative (alt="") because the visible text provides the label. -->
-        <a class="animal-card" role="listitem" href="https://youtu.be/u2DDVm7MztE?si=LjK5IxGoFo5aGHKz" target="_blank" rel="noopener noreferrer">
-          <img src="snake.jpg" alt="" aria-hidden="true" />
-          <span class="card-title">Ball Python</span>
-        </a>
+        <li>
+          <a class="animal-card" href="https://youtu.be/u2DDVm7MztE?si=LjK5IxGoFo5aGHKz" target="_blank" rel="noopener noreferrer">
+            <img src="snake.jpg" alt="" aria-hidden="true" />
+            <span class="card-title">Ball Python</span>
+          </a>
+        </li>
 
-        <a class="animal-card" role="listitem" href="https://youtu.be/6vbYqhvP3Ds?si=nJAw_M09FKXgr2Rs" target="_blank" rel="noopener noreferrer">
-          <img src="fish1.jpg" alt="" aria-hidden="true" />
-          <span class="card-title">Betta Fish</span>
-        </a>
+        <li>
+          <a class="animal-card" href="https://youtu.be/6vbYqhvP3Ds?si=nJAw_M09FKXgr2Rs" target="_blank" rel="noopener noreferrer">
+            <img src="fish1.jpg" alt="" aria-hidden="true" />
+            <span class="card-title">Betta Fish</span>
+          </a>
+        </li>
 
-        <a class="animal-card" role="listitem" href="https://youtu.be/sctuy_arPMg?si=o569WX4-jMuHkh6V" target="_blank" rel="noopener noreferrer">
-          <img src="greycat.jpg" alt="" aria-hidden="true" />
-          <span class="card-title">Domestic Cat</span>
-        </a>
+        <li>
+          <a class="animal-card" href="https://youtu.be/sctuy_arPMg?si=o569WX4-jMuHkh6V" target="_blank" rel="noopener noreferrer">
+            <img src="greycat.jpg" alt="" aria-hidden="true" />
+            <span class="card-title">Domestic Cat</span>
+          </a>
+        </li>
 
-        <a class="animal-card" role="listitem" href="https://youtu.be/peUVLEUj-AM?si=DqtzNnPNV7t0N-fv" target="_blank" rel="noopener noreferrer">
-          <img src="labdog.jpg" alt="" aria-hidden="true" />
-          <span class="card-title">Dog</span>
-        </a>
+        <li>
+          <a class="animal-card" href="https://youtu.be/peUVLEUj-AM?si=DqtzNnPNV7t0N-fv" target="_blank" rel="noopener noreferrer">
+            <img src="labdog.jpg" alt="" aria-hidden="true" />
+            <span class="card-title">Dog</span>
+          </a>
+        </li>
 
-        <a class="animal-card" role="listitem" href="https://youtu.be/iessmEj4Xe0?si=PNk25m2_xu37Fjr2" target="_blank" rel="noopener noreferrer">
-          <img src="cornsnake.jpg" alt="" aria-hidden="true" />
-          <span class="card-title">Corn Snake</span>
-        </a>
+        <li>
+          <a class="animal-card" href="https://youtu.be/iessmEj4Xe0?si=PNk25m2_xu37Fjr2" target="_blank" rel="noopener noreferrer">
+            <img src="cornsnake.jpg" alt="" aria-hidden="true" />
+            <span class="card-title">Corn Snake</span>
+          </a>
+        </li>
 
-        <a class="animal-card" role="listitem" href="https://youtu.be/dgJBt3ERqqg?si=yypNNyIDgrXV6GOv" target="_blank" rel="noopener noreferrer">
-          <img src="leopardgecko.jpg" alt="" aria-hidden="true" />
-          <span class="card-title">Leopard Gecko</span>
-        </a>
-      </div>
+        <li>
+          <a class="animal-card" href="https://youtu.be/dgJBt3ERqqg?si=yypNNyIDgrXV6GOv" target="_blank" rel="noopener noreferrer">
+            <img src="leopardgecko.jpg" alt="" aria-hidden="true" />
+            <span class="card-title">Leopard Gecko</span>
+          </a>
+        </li>
+      </ul>
 
       <!-- Pagination -->
       <nav class="pagination" aria-label="Care guides pages" style="margin-top:24px; text-align:center;">
@@ -206,5 +225,3 @@
   <script src="slideshow.js"></script>
 </body>
 </html>
-
-
