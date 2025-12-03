@@ -610,16 +610,23 @@ h2 {
 }
 
 
-/* Twitter (Orange) button */
-/* Ensure Twitter button text matches Facebook text color */
+/* Twitter (Orange) button — background + border + black text for contrast */
 .btn-twitter {
-  color: #000; /* BLACK text — passes AA contrast */
+  background-color: var(--accent);      /* orange background */
+  border: 2px solid var(--accent);      /* matching border */
+  color: #000;                          /* BLACK text for accessibility */
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-family: var(--font-main);
+  font-size: 1rem;
 }
-/* Hover (keeps darker orange background; text stays the same color) */
+
 .btn-twitter:hover {
-  background-color: #b47b27;
-  border-color: #b47b27;
-  color: #000;
+  background-color: var(--accent-hover); /* darker hover bg */
+  border-color: var(--accent-hover);
+  color: #000;                            /* stay black on hover */
 }
 
 /* Responsive */
