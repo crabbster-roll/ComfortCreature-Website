@@ -109,9 +109,11 @@
 
         <!-- Step 3: text suggestions -->
         <section class="survey-step" data-step="3">
-          <h2>Do you have any suggestions for improvement?</h2>
-          <textarea id="suggestions" name="suggestions" rows="6" style="width:100%;"></textarea>
-        </section>
+  <h2 id="suggestions-title">Do you have any suggestions for improvement?</h2>
+  <label for="suggestions" class="sr-only">Your suggestions</label>
+  <textarea id="suggestions" name="suggestions" rows="6" style="width:100%;"></textarea>
+</section>
+
 
         <div class="survey-controls">
           <button type="button" id="prev-btn" disabled>Previous</button>
@@ -164,6 +166,7 @@
   <script src="survey.js"></script>
 </body>
 </html>
+
 
 
 
