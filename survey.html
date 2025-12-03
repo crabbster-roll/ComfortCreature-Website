@@ -6,23 +6,54 @@
   <title>Creature Comfort - Survey</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    /* small page-specific styles so features look decent without changing your main CSS */
-    .survey-container { max-width: 720px; margin: 20px auto; padding: 12px; background:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);}
-    .survey-step { display: none; }
-    .survey-step.active { display: block; }
-    .survey-controls { display:flex; gap:8px; margin-top:12px; }
-    .survey-controls button { padding:8px 12px; }
-    .rating-stars { font-size: 26px; letter-spacing:6px; cursor:pointer; user-select:none; }
-    .rating-stars .star { color:#ccc; }
-    .rating-stars .star.selected { color: #ffb400; }
-    .feedback-list { margin-top:12px; max-height:200px; overflow:auto; border-top:1px solid #eee; padding-top:8px;}
-    .feedback-item { padding:8px; border-bottom:1px solid #f1f1f1; }
-    /* modal */
-    .modal { position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.45); }
-    .modal.open { display:flex; }
-    .modal-panel { background:#fff; padding:16px; border-radius:8px; width: 100%; max-width:520px; box-shadow:0 8px 30px rgba(0,0,0,0.2); }
-    .modal-panel header { display:flex; justify-content:space-between; align-items:center; }
-    .small-muted { color:#666; font-size:0.9rem; }
+    <style>
+  /* small page-specific styles so features look decent without changing your main CSS */
+  .survey-container { max-width: 720px; margin: 20px auto; padding: 12px; background:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+  .survey-step { display: none; }
+  .survey-step.active { display: block; }
+  .survey-controls { display:flex; gap:8px; margin-top:12px; }
+  .survey-controls button { padding:8px 12px; }
+
+  /* ACCESSIBLE STAR RATING — replaces old rating-stars rules */
+  .rating-stars {
+    font-size: 26px;
+    letter-spacing: 6px;
+    cursor: pointer;
+    user-select: none;
+    display: inline-flex;
+    gap: 6px;
+  }
+
+  .rating-stars .star {
+    color: #666; /* accessible unselected grey */
+    outline: none;
+    transition: color 120ms ease;
+    display: inline-block;
+    line-height: 1;
+  }
+
+  .rating-stars .star.selected {
+    color: var(--accent); /* uses your accent variable */
+  }
+
+  .rating-stars .star:hover,
+  .rating-stars .star:focus {
+    color: var(--accent);
+    outline: none;
+  }
+
+  /* feedback list */
+  .feedback-list { margin-top:12px; max-height:200px; overflow:auto; border-top:1px solid #eee; padding-top:8px;}
+  .feedback-item { padding:8px; border-bottom:1px solid #f1f1f1; }
+
+  /* modal */
+  .modal { position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.45); }
+  .modal.open { display:flex; }
+  .modal-panel { background:#fff; padding:16px; border-radius:8px; width: 100%; max-width:520px; box-shadow:0 8px 30px rgba(0,0,0,0.2); }
+  .modal-panel header { display:flex; justify-content:space-between; align-items:center; }
+  .small-muted { color:#666; font-size:0.9rem; }
+</style>
+
   </style>
 </head>
 <body>
@@ -136,6 +167,7 @@
   <script src="survey.js"></script>
 </body>
 </html>
+
 
 
 
