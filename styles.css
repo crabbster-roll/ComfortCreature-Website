@@ -591,11 +591,12 @@ h2 {
 .btn-facebook {
   background-color: var(--teal);        /* exact teal from :root */
   border: 2px solid var(--teal);
-  color: var(--dark);                   /* text = site dark/navy */
+  color: #fff;                   /* text = site dark/navy */
 }
 .btn-facebook:hover {
   background-color: #46785e;            /* darker teal tone for hover */
   border-color: #46785e;
+   color: #fff;
 }
 
 /* Twitter (Orange) button */
@@ -603,14 +604,14 @@ h2 {
 .btn-twitter {
   background-color: var(--accent);   /* keeps orange background */
   border: 2px solid var(--accent);
-  color: var(--dark);                /* same text color as Facebook button */
+  color: #fff;                /* same text color as Facebook button */
 }
 
 /* Hover (keeps darker orange background; text stays the same color) */
 .btn-twitter:hover {
   background-color: #b47b27;
   border-color: #b47b27;
-  color: var(--dark);
+  color: #fff;
 }
 
 /* Responsive */
