@@ -415,7 +415,7 @@ h2 {
   font-size: 2rem;
   font-weight: bold;
   margin: 1.5rem 0;
-  color: #000; /* BLACK */
+  color: var(--dark);
 }
 
 .myanimals-container {
@@ -432,7 +432,7 @@ h2 {
 }
 
 .pet-profiles h2 {
-  color: #000; /* BLACK (was accent) */
+  color: var(--accent);
   margin-bottom: 1rem;
 }
 
@@ -445,24 +445,7 @@ h2 {
 .pet-card {
   background: #eaf5f4;
   border: 2px solid #d3d3d3;
-  border-radius: 12px;
-  padding: 1.5rem;
-  display:
-
-
-.slideshow img {
-  width: 100%;
-  height: auto;
-}
-
-.fade {
-  animation: fadeEffect 1s;
-}
-
-@keyframes fadeEffect {
-  from { opacity: 0.4; }
-  to { opacity: 1; }
-}
+  border-radius:
 
 /* ========================
    Share buttons (Creature Comfort - final color-correct version)
