@@ -471,7 +471,7 @@ h2 {
 
 .health-log-btn {
   background: #5a9c7a;
-  color: white;
+  color: #000; /* BLACK TEXT */
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 6px;
@@ -482,6 +482,7 @@ h2 {
 
 .health-log-btn:hover {
   background: #46785e;
+  color: #000; /* stay BLACK on hover */
 }
 
 .add-pet {
