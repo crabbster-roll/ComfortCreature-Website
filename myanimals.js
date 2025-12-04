@@ -11,7 +11,7 @@
       dob: '',
       diet: 'Kibble every AM and PM',
       notes: 'Favors females over males, tends to have allergies in the spring.',
-      photo: 'MyAnimalsImages/dogmyanimals.jpg'
+      photo: 'Images/MyAnimalsImages/dogmyanimals.jpg'
     },
     {
       id: 'pet-' + Date.now() + '-2',
@@ -20,7 +20,7 @@
       dob: '',
       diet: 'Dry Food & Wet Food everyday',
       notes: 'Takes lots of naps.',
-      photo: 'MyAnimalsImages/catmyanimals.jpg'
+      photo: 'Images/MyAnimalsImages/catmyanimals.jpg'
     },
     {
       id: 'pet-' + Date.now() + '-3',
@@ -29,7 +29,7 @@
       dob: '',
       diet: 'Fish food once in the AM',
       notes: 'Very easy to take care of.',
-      photo: 'MyAnimalsImages/fishmyanimals.jpg'
+      photo: 'Images/MyAnimalsImages/fishmyanimals.jpg'
     }
   ];
 
