@@ -1,4 +1,4 @@
-// myanimals.js
+// myanimals.js (fixed)
 (function () {
   const PETS_KEY = 'cc_pets_v1';
   const LOGS_KEY = 'cc_healthlogs_v1';
@@ -33,38 +33,22 @@
     }
   ];
 
+  // migration helper
   function migratePetsIfNeeded(pets) {
-  let changed = false;
-  const fixed = pets.map(p => {
-    if (!p || !p.photo) return p;
-    // if photo already looks like a path, data URL, or external url, leave it
-    if (p.photo.startsWith('data:') || p.photo.startsWith('http') || p.photo.indexOf('/') !== -1) return p;
-    if (p.photo === 'logo.png') return p;
-    changed = true;
-    return { ...p, photo: 'MyAnimalsImages/' + p.photo };
-  });
-  return changed ? fixed : pets;
-}
-
-function loadPets() {
-  try {
-    const raw = localStorage.getItem(PETS_KEY);
-    if (!raw) {
-      localStorage.setItem(PETS_KEY, JSON.stringify(defaultPets));
-      return defaultPets.slice();
-    }
-    const stored = JSON.parse(raw);
-    const migrated = migratePetsIfNeeded(stored);
-    if (migrated !== stored) { // if changed, write back
-      localStorage.setItem(PETS_KEY, JSON.stringify(migrated));
-    }
-    return migrated;
-  } catch (e) {
-    console.error('Failed to load pets from storage', e);
-    return defaultPets.slice();
+    let changed = false;
+    const fixed = pets.map(p => {
+      if (!p || !p.photo) return p;
+      // leave data-URLs, external urls, or already-pathed values alone
+      if (typeof p.photo !== 'string') return p;
+      if (p.photo.startsWith('data:') || p.photo.startsWith('http') || p.photo.indexOf('/') !== -1) return p;
+      if (p.photo === 'logo.png') return p;
+      changed = true;
+      return { ...p, photo: 'MyAnimalsImages/' + p.photo };
+    });
+    return changed ? fixed : pets;
   }
-}
-  
+
+  // loadPets WITH migration (keep this; remove any duplicate definitions)
   function loadPets() {
     try {
       const raw = localStorage.getItem(PETS_KEY);
@@ -72,7 +56,12 @@ function loadPets() {
         localStorage.setItem(PETS_KEY, JSON.stringify(defaultPets));
         return defaultPets.slice();
       }
-      return JSON.parse(raw);
+      const stored = JSON.parse(raw);
+      const migrated = migratePetsIfNeeded(stored);
+      if (migrated !== stored) {
+        localStorage.setItem(PETS_KEY, JSON.stringify(migrated));
+      }
+      return migrated;
     } catch (e) {
       console.error('Failed to load pets from storage', e);
       return defaultPets.slice();
@@ -106,6 +95,15 @@ function loadPets() {
       .replace(/>/g, '&gt;');
   }
 
+  // small helper: resolve photo sources (data URLs, absolute/relative paths, or bare filenames)
+  function resolvePhotoSrc(photo) {
+    if (!photo) return 'logo.png';
+    if (typeof photo !== 'string') return 'logo.png';
+    if (photo.startsWith('data:') || photo.startsWith('http') || photo.indexOf('/') !== -1) return photo;
+    // bare filename -> assume MyAnimalsImages folder
+    return 'MyAnimalsImages/' + photo;
+  }
+
   function makePetCard(pet) {
     const wrapper = document.createElement('div');
     wrapper.className = 'pet-card';
@@ -114,7 +112,7 @@ function loadPets() {
     // image
     const img = document.createElement('img');
     img.alt = pet.name + ' photo';
-    img.src = pet.photo || 'logo.png';
+    img.src = resolvePhotoSrc(pet.photo || 'logo.png');
 
     const info = document.createElement('div');
     info.className = 'pet-info';
@@ -250,19 +248,7 @@ function loadPets() {
     });
   }
 
-  function commitPetUpdate(updatedPet, formEl, formNode, infoDiv, controls) {
-    // update storage
-    const pets = loadPets();
-    const idx = pets.findIndex(p => p.id === updatedPet.id);
-    if (idx >= 0) {
-      pets[idx] = updatedPet;
-      savePets(pets);
-    }
-    // cleanup and re-render list
-    renderPetList();
-  }
-
-  // helper wrapper to match signature above
+  // single commitPetUpdate function (no duplicates)
   function commitPetUpdate(updatedPet, cardEl, formEl, infoDiv, controls) {
     const pets = loadPets();
     const idx = pets.findIndex(p => p.id === updatedPet.id);
@@ -273,7 +259,7 @@ function loadPets() {
     renderPetList();
   }
 
-  // handle add form (like previous version)
+  // handle add form
   function handleFormSubmit(e) {
     e.preventDefault();
     const name = document.getElementById('petname').value.trim();
