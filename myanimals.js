@@ -20,7 +20,7 @@
       dob: '',
       diet: 'Dry Food & Wet Food everyday',
       notes: 'Takes lots of naps.',
-      photo: 'catmyanimals.jpg'
+      photo: 'MyAnimalsImages/catmyanimals.jpg'
     },
     {
       id: 'pet-' + Date.now() + '-3',
@@ -29,7 +29,7 @@
       dob: '',
       diet: 'Fish food once in the AM',
       notes: 'Very easy to take care of.',
-      photo: 'fishmyanimals.jpg'
+      photo: 'MyAnimalsImages/fishmyanimals.jpg'
     }
   ];
 
