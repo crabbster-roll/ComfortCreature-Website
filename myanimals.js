@@ -11,7 +11,7 @@
       dob: '',
       diet: 'Kibble every AM and PM',
       notes: 'Favors females over males, tends to have allergies in the spring.',
-      photo: 'dogmyanimals.jpg'
+      photo: 'MyAnimalsImages/dogmyanimals.jpg'
     },
     {
       id: 'pet-' + Date.now() + '-2',
