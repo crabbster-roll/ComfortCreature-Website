@@ -33,6 +33,38 @@
     }
   ];
 
+  function migratePetsIfNeeded(pets) {
+  let changed = false;
+  const fixed = pets.map(p => {
+    if (!p || !p.photo) return p;
+    // if photo already looks like a path, data URL, or external url, leave it
+    if (p.photo.startsWith('data:') || p.photo.startsWith('http') || p.photo.indexOf('/') !== -1) return p;
+    if (p.photo === 'logo.png') return p;
+    changed = true;
+    return { ...p, photo: 'MyAnimalsImages/' + p.photo };
+  });
+  return changed ? fixed : pets;
+}
+
+function loadPets() {
+  try {
+    const raw = localStorage.getItem(PETS_KEY);
+    if (!raw) {
+      localStorage.setItem(PETS_KEY, JSON.stringify(defaultPets));
+      return defaultPets.slice();
+    }
+    const stored = JSON.parse(raw);
+    const migrated = migratePetsIfNeeded(stored);
+    if (migrated !== stored) { // if changed, write back
+      localStorage.setItem(PETS_KEY, JSON.stringify(migrated));
+    }
+    return migrated;
+  } catch (e) {
+    console.error('Failed to load pets from storage', e);
+    return defaultPets.slice();
+  }
+}
+  
   function loadPets() {
     try {
       const raw = localStorage.getItem(PETS_KEY);
